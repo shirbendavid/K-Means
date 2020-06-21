@@ -6,6 +6,7 @@ from Clustering import *
 import pandas as pd
 import tkinter as tk
 from tkinter import *
+from PIL import Image, ImageTk
 
 
 class KmeansClustering:
@@ -20,7 +21,9 @@ class KmeansClustering:
     # Initialize the GUI
     def __init__(self, master):
         #self.map_label = Label(image=map, width='450px', height='350px')
-        #self.scatter_label = Label(image=scatter, width='450px', height='350px')
+        #self.scatter_label = Label(image=scatter.gif, width='450px', height='350px')
+        self.map_label = PhotoImage(file="map.gif")
+        self.scatter_label = PhotoImage(file='scatter.gif')
         self.master = master
         master.title("K Means Clustering")
         master.configure(background="pink")
@@ -40,7 +43,8 @@ class KmeansClustering:
 
         # Num of runs
         self.labelInitNum = Label(master, text="Num of runs:").pack()
-        self.entryInitNum = Entry(master, width=20, validate="key").pack()
+        self.entryInitNum = Entry(master, width=20, validate="key")
+        self.entryInitNum.pack()
 
         # pre processing
         self.clean_button = Button(master, text="Pre-process", width=20, command=self.clean)
@@ -74,7 +78,7 @@ class KmeansClustering:
 
     # pre processing
     def clean(self):
-        if self.validate(self, self.entryClusterNum.get(), self.entryInitNum.get(), self.file_path):
+        if self.validate(self.entryClusterNum.get(), self.entryInitNum.get(), self.file_path):
             self.dataCleaner = CleanData(self.df).Clean()
             messageBox.showinfo("K Means Clustering", "Preprocessing completed successfully!")
             self.cluster_button.config(state=NORMAL)
@@ -84,16 +88,26 @@ class KmeansClustering:
         self.clustering.cluster()
 
         # show images in gui
-        image1 = r'./scatter.gif'
-        scatter = PhotoImage(file=image1)
-        self.scatter_label.image = scatter
+        #image1 = r'./scatter.gif'
+        #scatter = PhotoImage(file=image1)
+        #self.scatter_label.image = scatter
 
-        image2 = r'./map.gif'
-        map = PhotoImage(file=image2)
-        self.map_label.image = map
+        #image2 = r'./map.gif'
+        #map = PhotoImage(file=image2)
+        #self.map_label.image = map
 
-        self.scatter_label.grid(row=8, column=0, columnspan=2, sticky=W)
-        self.map_label.grid(row=8, column=2, columnspan=2, sticky=E)
+        #self.scatter_label.grid(row=8, column=0, columnspan=2, sticky=W)
+        #self.map_label.grid(row=8, column=2, columnspan=2, sticky=E)
+        scatter_image = Image.open('scatter.gif')
+        scatter_plot_photo = ImageTk.PhotoImage(scatter_image)
+        map_image = Image.open('map.gif')
+        map_photo = ImageTk.PhotoImage(map_image)
+        lab1 = Label(image=scatter_plot_photo)
+        lab1.image = scatter_plot_photo
+        lab1.grid(row=self.index, column=0)
+        lab2 = Label(root, image=map_photo)
+        lab2.image = map_photo
+        lab2.grid(row=self.index, column=1)
         messageBox.showinfo("K Means Clustering", "Cluster completed successfully!")
 
     def validate(self, cluster, init, path):

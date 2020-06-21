@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import chart_studio.plotly as py
+import plotly.graph_objects as go
 from PIL import Image
 from sklearn.cluster import KMeans
 
@@ -44,45 +45,46 @@ class Clustering:
         plt.colorbar(sc)
         plt.savefig("./scatter.png")
 
+
     #map
     def horoplethMap(self):
-        #username: ilanamor
-        # PuJAQXTCGxrq3pgAHvqo
+        df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv')
 
-        data = [dict(
-            type='choropleth',
-            locations=self.df['code'],
-            z=self.df['cluster'],
-            text=self.df['country'],
-            colorscale=[[0, "rgb(5, 10, 172)"], [0.35, "rgb(40, 60, 190)"], [0.5, "rgb(70, 100, 245)"], \
-                        [0.6, "rgb(90, 120, 245)"], [0.7, "rgb(106, 137, 247)"], [1, "rgb(220, 220, 220)"]],
+        fig = go.Figure(data=go.Choropleth(
+            locations=df['CODE'],
+            z=df['GDP (BILLIONS)'],
+            text=df['COUNTRY'],
+            colorscale='Blues',
             autocolorscale=False,
             reversescale=True,
-            marker=dict(
-                line=dict(
-                    color='rgb(180,180,180)',
-                    width=0.5
-                )),
-            colorbar=dict(
-                autotick=False,
-                #tickprefix='$',
-                title='Cluster Group'),
-        )]
+            marker_line_color='darkgray',
+            marker_line_width=0.5,
+            colorbar_tickprefix='$',
+            colorbar_title='GDP<br>Billions US$',
+        ))
 
-        layout = dict(
-            title='K-Means Clustering Visualization',
+        fig.update_layout(
+            title_text='2014 Global GDP',
             geo=dict(
-                showframe=True,
+                showframe=False,
                 showcoastlines=False,
-                projection=dict(
-                    type='Mercator'
-                )
-            )
+                projection_type='equirectangular'
+            ),
+            annotations=[dict(
+                x=0.55,
+                y=0.1,
+                xref='paper',
+                yref='paper',
+                text='Source: <a href="https://www.cia.gov/library/publications/the-world-factbook/fields/2195.html">\
+                    CIA World Factbook</a>',
+                showarrow=False
+            )]
         )
+
+        fig.show()
         py.sign_in("shirbendor", "ByDLoTeQOewal6U26ATM")
-        #py.tools.set_credentials_file(username="shirbendor", api_key="ByDLoTeQOewal6U26ATM")
-        fig = dict(data=data, layout=layout)
-        py.iplot(fig, validate=False, filename='d3-world-map')
+        #fig = dict(data=data, layout=layout)
+        #py.iplot(fig, validate=False, filename='d3-world-map')
         py.image.save_as(fig, filename="./map.png")
 
     #convert images from png to gif
