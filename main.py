@@ -33,8 +33,10 @@ class KmeansClustering:
         self.entryPath.pack(side= "left", padx=8, pady=2)
         self.browse_button.pack(side= "left", padx=8, pady=2)
         # Num of clusters
-        self.labelClusterNum = Label(master, text="Num of clusters k:").pack()
-        self.entryClusterNum = Entry(master, width=20, validate="key").pack()
+        self.labelClusterNum = Label(master, text="Num of clusters k:")
+        self.labelClusterNum.pack()
+        self.entryClusterNum = Entry(master, width=20, validate="key")
+        self.entryClusterNum.pack()
 
         # Num of runs
         self.labelInitNum = Label(master, text="Num of runs:").pack()
@@ -53,15 +55,14 @@ class KmeansClustering:
         self.close_button.pack(side = "left")
 
     def chooseFile(self):
-        self.file_path = filedialog.askopenfile()
+        self.file_path = filedialog.askopenfilename()
         self.entryPath.delete(0, END)
         self.entryPath.insert(0, self.file_path)
 
-        if not self.file_path:
+        #if not self.file_path:
             # tkMessageBox.showinfo("K Means Clustering", "insert a file")
-            return
-
-        if not (self.file_path[-5:] == ".xlsx" or self.file_path[-4:] == ".xls"):
+            #return
+        if not (self.file_path.endswith("xlsx") or self.file_path.endswith("xls")):
             messageBox.showerror("K Means Clustering", "insert an excel file")
             return
 
@@ -73,7 +74,7 @@ class KmeansClustering:
 
     # pre processing
     def clean(self):
-        if self.validate(self.entryClusterNum.get(), self.entryInitNum.get(), self.file_path):
+        if self.validate(self, self.entryClusterNum.get(), self.entryInitNum.get(), self.file_path):
             self.dataCleaner = CleanData(self.df).Clean()
             messageBox.showinfo("K Means Clustering", "Preprocessing completed successfully!")
             self.cluster_button.config(state=NORMAL)
