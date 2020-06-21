@@ -8,21 +8,6 @@ import tkinter as tk
 from tkinter import *
 
 
-def gridDefinition(master):
-    master.grid_rowconfigure(0, weight=2)
-    master.grid_rowconfigure(1, weight=1)
-    master.grid_rowconfigure(2, weight=1)
-    master.grid_rowconfigure(3, weight=1)
-    master.grid_rowconfigure(4, weight=1)
-    master.grid_rowconfigure(5, weight=1)
-    master.grid_rowconfigure(6, weight=1)
-    master.grid_rowconfigure(7, weight=1)
-    master.grid_columnconfigure(0, weight=1)
-    master.grid_columnconfigure(1, weight=1)
-    master.grid_columnconfigure(2, weight=1)
-    master.grid_columnconfigure(3, weight=2)
-
-
 class KmeansClustering:
     # data members
     file_path = ""
@@ -38,50 +23,34 @@ class KmeansClustering:
         #self.scatter_label = Label(image=scatter, width='450px', height='350px')
         self.master = master
         master.title("K Means Clustering")
-        # master.geometry("650x300")
+        master.configure(background="pink")
+       # master.geometry("650x300")
 
         # Data path
-        self.labelPath = Label(master, text="File Path:")
+        self.labelPath = Label(master, text="File Path:").pack(side= "left", padx=8, pady=2)
         self.entryPath = Entry(master, width=70)
         self.browse_button = Button(master, text="Browse", width=10, command=self.chooseFile)
-        #self.browse_button.pack()
-
+        self.entryPath.pack(side= "left", padx=8, pady=2)
+        self.browse_button.pack(side= "left", padx=8, pady=2)
         # Num of clusters
-        self.labelClusterNum = Label(master, text="Num of clusters k:")
-        self.entryClusterNum = Entry(master, width=20, validate="key")
+        self.labelClusterNum = Label(master, text="Num of clusters k:").pack()
+        self.entryClusterNum = Entry(master, width=20, validate="key").pack()
 
         # Num of runs
-        self.labelInitNum = Label(master, text="Num of runs:")
-        self.entryInitNum = Entry(master, width=20, validate="key")
+        self.labelInitNum = Label(master, text="Num of runs:").pack()
+        self.entryInitNum = Entry(master, width=20, validate="key").pack()
 
         # pre processing
         self.clean_button = Button(master, text="Pre-process", width=20, command=self.clean)
-        #self.clean_button.pack()
+        self.clean_button.pack(side = "left")
 
         # Clustrization
         self.cluster_button = Button(master, text="Cluster", width=20, command=self.cluster, state=DISABLED)
-        #self.cluster_button.pack()
+        self.cluster_button.pack(side = "left")
 
         # Close
         self.close_button = Button(master, text="Exit", width=10, command=master.quit)
-        #self.close_button.pack()
-
-        # Define grid
-        gridDefinition(master)
-        # layout the controls in the grid
-        self.controlsLayout()
-
-    def controlsLayout(self):
-        self.labelPath.grid(row=1, column=0, sticky=E)
-        self.entryPath.grid(row=1, column=1, columnspan=2, sticky=W)
-        self.browse_button.grid(row=1, column=3, sticky=W)
-        self.labelClusterNum.grid(row=2, column=0, sticky=E)
-        self.entryClusterNum.grid(row=2, column=1, sticky=W)
-        self.labelInitNum.grid(row=3, column=0, sticky=E)
-        self.entryInitNum.grid(row=3, column=1, sticky=W)
-        self.clean_button.grid(row=5, column=1, columnspan=2)
-        self.cluster_button.grid(row=6, column=1, columnspan=2)
-        self.close_button.grid(row=10, column=1, columnspan=2)
+        self.close_button.pack(side = "left")
 
     def chooseFile(self):
         self.file_path = filedialog.askopenfile()
