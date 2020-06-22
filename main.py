@@ -30,33 +30,33 @@ class KmeansClustering:
        # master.geometry("650x300")
 
         # Data path
-        self.labelPath = Label(master, text="File Path:").pack(side= "left", padx=8, pady=2)
+        self.labelPath = Label(master, text="File Path:").pack(side='left', padx=5, pady=5)
         self.entryPath = Entry(master, width=70)
+        self.entryPath.pack(side='left', padx=5, pady=5)
         self.browse_button = Button(master, text="Browse", width=10, command=self.chooseFile)
-        self.entryPath.pack(side= "left", padx=8, pady=2)
-        self.browse_button.pack(side= "left", padx=8, pady=2)
+        self.browse_button.pack(side='left', padx=5, pady=5)
         # Num of clusters
         self.labelClusterNum = Label(master, text="Num of clusters k:")
-        self.labelClusterNum.pack()
+        self.labelClusterNum.pack(side='left', padx=5, pady=5)
         self.entryClusterNum = Entry(master, width=20, validate="key")
-        self.entryClusterNum.pack()
+        self.entryClusterNum.pack(side='left', padx=5, pady=5)
 
         # Num of runs
-        self.labelInitNum = Label(master, text="Num of runs:").pack()
+        self.labelInitNum = Label(master, text="Num of runs:").pack(side='left', padx=5, pady=5)
         self.entryInitNum = Entry(master, width=20, validate="key")
-        self.entryInitNum.pack()
+        self.entryInitNum.pack(side='left', padx=5, pady=5)
 
         # pre processing
         self.clean_button = Button(master, text="Pre-process", width=20, command=self.clean)
-        self.clean_button.pack(side = "left")
+        self.clean_button.pack(side='bottom', padx=5, pady=5)
 
         # Clustrization
         self.cluster_button = Button(master, text="Cluster", width=20, command=self.cluster, state=DISABLED)
-        self.cluster_button.pack(side = "left")
+        self.cluster_button.pack(side='bottom', padx=5, pady=5)
 
         # Close
         self.close_button = Button(master, text="Exit", width=10, command=master.quit)
-        self.close_button.pack(side = "left")
+        self.close_button.pack(side='bottom', padx=5, pady=5)
 
     def chooseFile(self):
         self.file_path = filedialog.askopenfilename()
@@ -104,10 +104,10 @@ class KmeansClustering:
         map_photo = ImageTk.PhotoImage(map_image)
         lab1 = Label(image=scatter_plot_photo)
         lab1.image = scatter_plot_photo
-        lab1.grid(row=self.index, column=0)
+        lab1.pack(side='left', padx=5, pady=10)
         lab2 = Label(root, image=map_photo)
         lab2.image = map_photo
-        lab2.grid(row=self.index, column=1)
+        lab2.pack(side='left', padx=5, pady=10)
         messageBox.showinfo("K Means Clustering", "Cluster completed successfully!")
 
     def validate(self, cluster, init, path):

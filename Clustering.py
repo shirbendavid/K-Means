@@ -81,7 +81,7 @@ class Clustering:
             )]
         )
 
-        fig.show()
+       # fig.show()
         py.sign_in("shirbendor", "ByDLoTeQOewal6U26ATM")
         #fig = dict(data=data, layout=layout)
         #py.iplot(fig, validate=False, filename='d3-world-map')
