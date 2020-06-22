@@ -116,7 +116,7 @@ class Main:
                 return False
             elif self.clusters_number > len(self.df.columns):
                 message_box.showerror("K Means Clustering",
-                                      "Number of clusters shouldn't be higher then the number of columns")
+                                      "The number of clusters shouldn't be higher then the number of columns")
                 return False
             elif self.runs_number < 1:
                 message_box.showerror("K Means Clustering", "The number for runs should be bigger than 0")

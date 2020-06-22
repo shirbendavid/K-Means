@@ -17,18 +17,15 @@ class Clustering:
         self.n_init = runs
 
     def cluster(self):
-        self.k_means_algorithm()
-        self.draw_scatter_image()
-        self.draw_map_image()
-
-    # k_means algorithm
-    def k_means_algorithm(self):
+        # k means algorithm
         self.k_means = KMeans(n_clusters=self.n_clusters, n_init=self.n_init).fit(self.df)
+        #  Make the country names abbreviated and in capital letters to make the income on the map
         self.df["cluster"] = self.k_means.labels_
         self.df.reset_index(level=0, inplace=True)
         self.df["code"] = self.df["country"].str[:3]
         self.df["code"] = self.df["code"].str.upper()
-        return self.df
+        self.draw_scatter_image()
+        self.draw_map_image()
 
     # scatter
     def draw_scatter_image(self):
@@ -70,4 +67,3 @@ class Clustering:
         )
         py.sign_in("shirbendor", "ByDLoTeQOewal6U26ATM")
         py.image.save_as(fig, filename="./map.png")
-
