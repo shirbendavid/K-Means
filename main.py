@@ -20,52 +20,49 @@ class KmeansClustering:
 
     # Initialize the GUI
     def __init__(self, master):
-        #self.map_label = Label(image=map, width='450px', height='350px')
-        #self.scatter_label = Label(image=scatter.gif, width='450px', height='350px')
         self.map_label = PhotoImage(file="map.gif")
         self.scatter_label = PhotoImage(file='scatter.gif')
         self.master = master
         master.title("K Means Clustering")
         master.configure(background="pink")
-       # master.geometry("650x300")
+        # master.geometry("650x300")
 
         # Data path
-        self.labelPath = Label(master, text="File Path:").pack(side='left', padx=5, pady=5)
+        self.labelPath = Label(master, text="File Path:").grid(row=1, column=0)
         self.entryPath = Entry(master, width=70)
-        self.entryPath.pack(side='left', padx=5, pady=5)
+        self.entryPath.grid(row=1, column=1)
         self.browse_button = Button(master, text="Browse", width=10, command=self.chooseFile)
-        self.browse_button.pack(side='left', padx=5, pady=5)
-        # Num of clusters
-        self.labelClusterNum = Label(master, text="Num of clusters k:")
-        self.labelClusterNum.pack(side='left', padx=5, pady=5)
-        self.entryClusterNum = Entry(master, width=20, validate="key")
-        self.entryClusterNum.pack(side='left', padx=5, pady=5)
+        self.browse_button.grid(row=1, column=2)
+        # Number of clusters
+        self.labelClusterNumber = Label(master, text="Number of clusters k:").grid(row=2, column=0)
+        self.entryClusterNumber = Entry(master, width=20, validate="key")
+        self.entryClusterNumber.grid(row=2, column=1)
 
-        # Num of runs
-        self.labelInitNum = Label(master, text="Num of runs:").pack(side='left', padx=5, pady=5)
-        self.entryInitNum = Entry(master, width=20, validate="key")
-        self.entryInitNum.pack(side='left', padx=5, pady=5)
+        # Number of runs
+        self.labelRunsNumber = Label(master, text="Number of runs:").grid(row=3, column=0)
+        self.entryRunsNumber = Entry(master, width=20, validate="key")
+        self.entryRunsNumber.grid(row=3, column=1)
 
         # pre processing
         self.clean_button = Button(master, text="Pre-process", width=20, command=self.clean)
-        self.clean_button.pack(side='bottom', padx=5, pady=5)
+        self.clean_button.grid(row=4, column=0)
 
         # Clustrization
         self.cluster_button = Button(master, text="Cluster", width=20, command=self.cluster, state=DISABLED)
-        self.cluster_button.pack(side='bottom', padx=5, pady=5)
+        self.cluster_button.grid(row=5, column=0)
 
         # Close
         self.close_button = Button(master, text="Exit", width=10, command=master.quit)
-        self.close_button.pack(side='bottom', padx=5, pady=5)
+        self.close_button.grid(row=5, column=2)
 
     def chooseFile(self):
         self.file_path = filedialog.askopenfilename()
         self.entryPath.delete(0, END)
         self.entryPath.insert(0, self.file_path)
 
-        #if not self.file_path:
-            # tkMessageBox.showinfo("K Means Clustering", "insert a file")
-            #return
+        # if not self.file_path:
+        # tkMessageBox.showinfo("K Means Clustering", "insert a file")
+        # return
         if not (self.file_path.endswith("xlsx") or self.file_path.endswith("xls")):
             messageBox.showerror("K Means Clustering", "insert an excel file")
             return
@@ -88,26 +85,26 @@ class KmeansClustering:
         self.clustering.cluster()
 
         # show images in gui
-        #image1 = r'./scatter.gif'
-        #scatter = PhotoImage(file=image1)
-        #self.scatter_label.image = scatter
+        # image1 = r'./scatter.gif'
+        # scatter = PhotoImage(file=image1)
+        # self.scatter_label.image = scatter
 
-        #image2 = r'./map.gif'
-        #map = PhotoImage(file=image2)
-        #self.map_label.image = map
+        # image2 = r'./map.gif'
+        # map = PhotoImage(file=image2)
+        # self.map_label.image = map
 
-        #self.scatter_label.grid(row=8, column=0, columnspan=2, sticky=W)
-        #self.map_label.grid(row=8, column=2, columnspan=2, sticky=E)
+        # self.scatter_label.grid(row=8, column=0, columnspan=2, sticky=W)
+        # self.map_label.grid(row=8, column=2, columnspan=2, sticky=E)
         scatter_image = Image.open('scatter.gif')
         scatter_plot_photo = ImageTk.PhotoImage(scatter_image)
         map_image = Image.open('map.gif')
         map_photo = ImageTk.PhotoImage(map_image)
         lab1 = Label(image=scatter_plot_photo)
         lab1.image = scatter_plot_photo
-        lab1.pack(side='left', padx=5, pady=10)
+        lab1.grid(row=6, column=1)
         lab2 = Label(root, image=map_photo)
         lab2.image = map_photo
-        lab2.pack(side='left', padx=5, pady=10)
+        lab2.grid(row=6, column=0)
         messageBox.showinfo("K Means Clustering", "Cluster completed successfully!")
 
     def validate(self, cluster, init, path):
